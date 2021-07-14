@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-data-table',
@@ -6,10 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./data-table.component.scss']
 })
 export class DataTableComponent implements OnInit {
-
+  @Input() data!: any[];
+  @Input() headerRow!: string[];
+  @Input() columnWithSort!: string[];
+  
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.data)
   }
-
 }
