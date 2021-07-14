@@ -22,9 +22,9 @@ import { DataTableModule } from './data-table/data-table.module';
     EffectsModule.forRoot([]),
     DataTableModule,
     StoreDevtoolsModule.instrument({
-      maxAge: 2, // Retains last 25 states
-      logOnly: environment.production, // Restrict extension to log-only mode
-      autoPause: true, // Pauses recording actions and state changes when the extension window is not open
+      maxAge: 10, 
+      logOnly: environment.production, 
+      autoPause: true, 
     }),
   ]
 })

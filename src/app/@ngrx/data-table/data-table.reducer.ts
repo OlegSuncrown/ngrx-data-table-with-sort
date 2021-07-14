@@ -11,7 +11,8 @@ export interface DataTableState {
   sortKey: string;
   headerRow: HeaderRowItem[];
   columnWithSort: string[];
-  sortByDateKeys: string[];
+  isLoading?: boolean,
+  isLoaded?: boolean;
 }
 
 export const INITIAL_STATE: DataTableState = {
@@ -20,7 +21,8 @@ export const INITIAL_STATE: DataTableState = {
   sortKey: '',
   headerRow: [],
   columnWithSort: [],
-  sortByDateKeys: []
+  isLoading: false,
+  isLoaded: false
 };
 
 export const dataTableFeatureKey = 'dataTable';
