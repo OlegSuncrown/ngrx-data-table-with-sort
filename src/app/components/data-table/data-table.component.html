@@ -1,29 +1,34 @@
 <table class="table table-striped">
-  <thead class="table-dark">
+  <thead>
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col" *ngFor="let headerItem of headerRow" (click)="onSort(headerItem)">
+        <div class="d-flex">
+          {{ headerItem.displayName }}
+
+          <!-- SORT -->
+          <div class="d-flex flex-column ms-2" *ngIf="headerItem.hasSort">
+            <i
+              class="bi bi-caret-up-fill"
+              [class.sort-header-active]="(sortDirection$ | async) === 'asc' && headerItem.key === (sortKey$ | async)"
+            >
+            </i>
+            <i
+              class="bi bi-caret-down-fill"
+              [class.sort-header-active]="(sortDirection$ | async) === 'desc' && headerItem.key === (sortKey$ | async)"
+            >
+            </i>
+          </div>
+          <!-- SORT -->
+        </div>
+      </th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
+    <tr *ngFor="let row of tableData$ | async">
+      <td>{{ row.id }}</td>
+      <td>{{ row.name }}</td>
+      <td>{{ row.username }}</td>
+      <td>{{ row.city }}</td>
     </tr>
   </tbody>
 </table>
