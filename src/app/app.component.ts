@@ -1,9 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from './services/data.service';
+import { FormControl } from '@angular/forms';
 
 // RxJs
 import { Observable } from 'rxjs';
-import { startWith } from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
+
+// NgRx
+import { Store } from '@ngrx/store';
+import { DataTableState } from './models/data-table';
+import { setFilterBy } from './@ngrx/data-table';
 
 @Component({
   selector: 'app-root',
@@ -19,11 +25,19 @@ export class AppComponent implements OnInit {
     { displayName: 'City', key: 'city', hasSort: true },
   ];
 
-  constructor(private dataService: DataService) {}
+  searchControl = new FormControl('')
+  constructor(private dataService: DataService, private store: Store<DataTableState>) {}
 
   ngOnInit() {
     this.data$ = this.dataService.getData().pipe(
       startWith(null),
     );
+
+    this.searchControl.valueChanges.pipe(
+      map(query => query.toLowerCase())
+    ).subscribe((query) => {
+      console.log(query)
+      this.store.dispatch(setFilterBy({ filters: { filterBy: ['name', 'city'], query } }));
+    })
   }
 }

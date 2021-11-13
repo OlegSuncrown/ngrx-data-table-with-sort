@@ -4,7 +4,7 @@ import { DataTableState, HeaderRowItem } from 'src/app/models/data-table';
 
 // NgRx
 import { Store } from '@ngrx/store';
-import * as dataTableActions from 'src/app/@ngrx/data-table/data-table.actions';
+import * as dataTableActions from '../../@ngrx/data-table';
 import * as dataTableSelectors from 'src/app/@ngrx/data-table/data-table.selectors';
 
 @Component({
@@ -27,7 +27,7 @@ export class DataTableComponent implements OnInit {
     this.store.dispatch(dataTableActions.setData({ data: this.data }));
 
     // SELECTORS
-    this.tableData$ = this.store.select(dataTableSelectors.selectSortedData);
+    this.tableData$ = this.store.select(dataTableSelectors.selectData);
     this.sortKey$ = this.store.select(dataTableSelectors.selectSortKey);
     this.sortDirection$ = this.store.select(dataTableSelectors.selectSortDirection);
   }

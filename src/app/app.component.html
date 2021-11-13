@@ -12,13 +12,27 @@
         <app-error></app-error>
       </div>
       <!-- TABLE-->
-      <div class="col-12" *ngIf="data">
-        <app-data-table 
-          [data]="data"
-          [headerRow]="headerRow"
-        >
-        </app-data-table>
-      </div>
+      <ng-container *ngIf="data">
+        <div class="col-3 mx-auto">
+          <div class="mb-3">
+            <input
+              [formControl]="searchControl"
+              type="search"
+              class="form-control"
+              id="search"
+              placeholder="Search..."
+              aria-describedby="filter"
+            />
+          </div>
+        </div>
+        <div class="col-12">
+          <app-data-table 
+            [data]="data"
+            [headerRow]="headerRow"
+          >
+          </app-data-table>
+        </div>
+      </ng-container>
     </div>
   </div>
 </ng-container>

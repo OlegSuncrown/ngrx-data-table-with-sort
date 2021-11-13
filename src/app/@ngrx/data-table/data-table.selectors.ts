@@ -2,23 +2,41 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { DataTableState } from 'src/app/models/data-table';
 import * as fromDataTable from './data-table.reducer';
 
-export const selectDataTableState = createFeatureSelector<DataTableState>(
-  fromDataTable.dataTableFeatureKey
-);
+export const selectDataTableState = createFeatureSelector<DataTableState>(fromDataTable.dataTableFeatureKey);
 
 export const selectSortDirection = createSelector(selectDataTableState, (state: DataTableState) => state.sortDirection);
 export const selectSortKey = createSelector(selectDataTableState, (state: DataTableState) => state.sortKey);
 export const selectTableData = createSelector(selectDataTableState, (state: DataTableState) => state.tableData);
 
-export const selectSortedData = createSelector(
+export const selectFilterQuery = createSelector(selectDataTableState, (state: DataTableState) => state.filterQuery);
+export const selectFilterBy = createSelector(selectDataTableState, (state: DataTableState) => state.filterBy);
+
+export const selectData = createSelector(
   selectTableData,
   selectSortDirection,
   selectSortKey,
-  (tableData, sortDirection, sortKey) => {
-    if (sortDirection === '') {
-      return tableData;
+  selectFilterQuery,
+  selectFilterBy,
+  (tableData, sortDirection, sortKey, filterQuery, filterBy) => {
+    let filteredData = [...tableData];
+
+    // Filter Array
+    if (filterQuery !== '') {
+      filteredData = filteredData.filter((item) => {
+        const result = filterBy
+          .map((filterBy) => {
+            return item[filterBy]?.toLowerCase().includes(filterQuery);
+          })
+          .some((item) => item);
+        return result;
+      });
     }
-    const sortedData = [...tableData].sort((a, b) => {
+
+    if (sortDirection === '') {
+      return filteredData;
+    }
+
+    const sortedData = [...filteredData].sort((a, b) => {
       const paramA = a[sortKey];
       const paramB = b[sortKey];
       return compare(paramA, paramB, sortDirection);

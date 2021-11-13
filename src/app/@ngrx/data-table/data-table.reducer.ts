@@ -2,11 +2,14 @@ import { Action, createReducer, on } from '@ngrx/store';
 import * as DataTableActions from './data-table.actions';
 import { DataTableState } from 'src/app/models/data-table';
 
+export const INITIAL_FILTER_KEY = { filterKey: '', query: '' } 
 
 export const INITIAL_STATE: DataTableState = {
   tableData: [],
   sortDirection: '',
   sortKey: '',
+  filterQuery: '', 
+  filterBy: [] 
 };
 
 export const dataTableFeatureKey = 'dataTable';
@@ -42,7 +45,17 @@ export const dataTableReducer = createReducer(
       ...state,
       ...INITIAL_STATE
     };
-  })
+  }),
+
+  on(DataTableActions.setFilterBy, (state, { filters }) => { 
+    return { 
+      ...state, 
+      sortDirection: '', 
+      sortKey: '', 
+      filterQuery: filters.query, 
+      filterBy: filters.filterBy 
+    }; 
+  }), 
 );
 
 export function DataTableReducer(state: DataTableState, action: Action) {

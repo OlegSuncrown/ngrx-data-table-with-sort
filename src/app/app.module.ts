@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { RootStoreModule } from './@ngrx/root-store.module';
 import { ReactiveComponentModule } from '@ngrx/component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 // components
 import { AppComponent } from './app.component';
@@ -23,6 +24,7 @@ import { ErrorComponent } from './components/error/error.component';
     RootStoreModule,
     HttpClientModule,
     ReactiveComponentModule,
+    ReactiveFormsModule,
     AppRoutingModule
   ],
   providers: [],
